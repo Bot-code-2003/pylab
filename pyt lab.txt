@@ -1,0 +1,130 @@
+1.Family Tree
+class FamilyTree:
+    def __init__(self):
+        self.family_tree = {}
+
+    def add_member(self, name, parent=None):
+        if name not in self.family_tree:
+            self.family_tree[name] = {'parent': parent, 'children': []}
+            if parent in self.family_tree:
+                self.family_tree[parent]['children'].append(name)
+
+    def print_family_tree(self):
+        print("Family Tree:")
+        for name, data in self.family_tree.items():
+            parent = data['parent']
+            children = data['children']
+            print(f"{name} (Parent: {parent}, Children: {', '.join(children)})")
+
+family = FamilyTree()
+
+while True:
+    print("\nFamily Tree Management Menu:")
+    print("1. Add Member")
+    print("2. Print Family Tree")
+    print("3. Exit")
+    choice = input("Enter your choice: ")
+    if choice == '1':
+        name = input("Enter the name of the family member: ")
+        parent = input("Enter the parent's name (leave blank if none): ")
+        family.add_member(name, parent)
+    elif choice == '2':
+        family.print_family_tree()
+    elif choice == '3':
+        break
+    else:
+        print("Invalid choice. Please enter a valid option.")
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.Water Jug Problem
+
+def pour_water(juga, jugb):
+    max1, max2, fill = 3, 4, 2
+    print("%d \t%d" % (juga, jugb))
+    if jugb==fill:
+        return
+    elif jugb==max2:
+        pour_water(0,juga)
+    elif juga!=0 and jugb==0:
+        pour_water(0,juga)
+    elif juga==fill:
+        pour_water(juga,0)
+    elif juga<max1:
+        pour_water(max1, jugb)
+    elif juga<(max2-jugb):
+        pour_water(0,(juga+jugb))
+    else:
+        pour_water(juga-(max2-jugb), (max2-jugb)+jugb)
+    
+    
+    
+print("Jug A \tJug B")
+pour_water(0,0)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.Best First Search
+
+from queue import PriorityQueue
+v=5
+graph = [[] for i in range(v)]
+
+def addedge(x, y, cost):
+    graph[x].append((y,cost))
+    graph[y].append((x,cost))
+
+def bestFirstSearch(source, target, n):
+    visited = [False]*n
+    pq = PriorityQueue()
+    pq.put((0,source))
+    visited[source] = True
+    while pq.empty()==False:
+        u = pq.get()[1]
+        print(u, end="")
+        if(u==target):
+            break
+        for v,c in graph[u]:
+            if(visited[v]==False):
+                visited[v]=True
+                pq.put((c,v))
+        print()
+
+addedge(0, 1, 4)
+addedge(0, 2, 5)
+addedge(1, 3, 2)
+addedge(2, 4, 8)
+addedge(3, 4, 6)
+source = 0
+target = 4
+bestFirstSearch(source, target, v)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Depth First search
+
+graph = {}
+visited = set()
+
+def addedge(x,y):
+    if x not in graph.keys():
+        graph[x] = [y]
+    else:
+        graph[x].append(y)
+    if y not in graph.keys():
+        graph[y] = [x]
+    else:
+        graph[y].append(x)
+
+def DFS(visited, graph, start):
+    if start not in visited:
+        print(start, end=" ")
+        visited.add(start)
+        for i in graph[start]:
+            DFS(visited, graph, i)
+
+addedge(5, 1)
+addedge(5, 3)
+addedge(1, 6)
+addedge(3, 2)
+addedge(3, 4)
+addedge(8, 0)
+addedge(1, 8)
+addedge(4, 8)
+
+DFS(visited, graph, 5)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
